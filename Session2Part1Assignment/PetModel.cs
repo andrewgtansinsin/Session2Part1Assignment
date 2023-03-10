@@ -20,7 +20,7 @@ namespace Session2Part1Assignment
         public string[] PhotoUrls { get; set; }
 
         [JsonProperty("tags")]
-        public Tags Tags { get; set; }
+        public Tags[] Tags { get; set; }
 
         [JsonProperty("status")]
         public string Status { get; set; }
@@ -38,10 +38,10 @@ namespace Session2Part1Assignment
     public class Tags
     {
         [JsonProperty("id")]
-        public long[] Id { get; set; }
+        public long Id { get; set; }
 
         [JsonProperty("name")]
-        public string[] Name { get; set; }
+        public string Name { get; set; }
     }
 
 }

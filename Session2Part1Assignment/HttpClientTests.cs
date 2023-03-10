@@ -53,15 +53,19 @@ namespace Session2Part1Assignment
             PetModel petData = new PetModel()
             {
                 Id = 88,
-                Category = {
+                Category = new Category{
                     Id = 8008,
                     Name = "Persian Cat"
                 },
                 Name = "Garfield",
                 PhotoUrls = new string[] {V},
-                Tags = {
-                    Id = new long[] {2023},
-                    Name = new string[] {"Andrew Tansinsin"}
+                Tags = new Tags[] { new Tags {
+                    Id = 2023,
+                    Name = "Andrew Tansinsin"
+                },new Tags {
+                    Id = 2024,
+                    Name = "Andrew Tansinsin"
+                }
                 },
                 Status = "available"
             };
@@ -78,7 +82,7 @@ namespace Session2Part1Assignment
             #region get Username of the created data
 
             // Get Request
-            var getResponse = await httpClient.GetAsync(GetURI($"{UsersEndpoint}/{petData.Name}"));
+            var getResponse = await httpClient.GetAsync(GetURI($"{UsersEndpoint}/{petData.Id}"));
 
             // Deserialize Content
             var listPetData = JsonConvert.DeserializeObject<PetModel>(getResponse.Content.ReadAsStringAsync().Result);
@@ -94,15 +98,20 @@ namespace Session2Part1Assignment
             petData = new PetModel()
             {
                 Id = listPetData.Id,
-                Category = {
+                Category = new Category {
                     Id = listPetData.Category.Id,
                     Name = listPetData.Category.Name
                 },
                 Name = "Garfunkel.put.updated",
                 PhotoUrls = new string[] { V },
-                Tags = {
-                    Id = listPetData.Tags.Id,
-                    Name = listPetData.Tags.Name
+                Tags = 
+                    new Tags[] { new Tags {
+                    Id = listPetData.Id,
+                    Name = listPetData.Name
+                },new Tags {
+                    Id = listPetData.Id,
+                    Name = listPetData.Name
+                }
                 },
                 Status = listPetData.Status
             };
@@ -112,7 +121,7 @@ namespace Session2Part1Assignment
             postRequest = new StringContent(request, Encoding.UTF8, "application/json");
 
             // Send Put Request
-            var httpResponse = await httpClient.PutAsync(GetURL($"{UsersEndpoint}/{createdPetData}"), postRequest);
+            var httpResponse = await httpClient.PutAsync(GetURL($"{UsersEndpoint}"), postRequest);
 
             // Get Status Code
             var statusCode = httpResponse.StatusCode;
@@ -122,7 +131,7 @@ namespace Session2Part1Assignment
             #region get updated data
 
             // Get Request
-            getResponse = await httpClient.GetAsync(GetURI($"{UsersEndpoint}/{petData.Name}"));
+            getResponse = await httpClient.GetAsync(GetURI($"{UsersEndpoint}/{petData.Id}"));
 
             // Deserialize Content
             listPetData = JsonConvert.DeserializeObject<PetModel>(getResponse.Content.ReadAsStringAsync().Result);
