@@ -40,7 +40,7 @@ namespace Session2Part1Assignment
         {
            foreach (var data in cleanUpList)
             {
-                var httpResponse = await httpClient.DeleteAsync(GetURL($"{UsersEndpoint}/{data.Name}"));
+                var httpResponse = await httpClient.DeleteAsync(GetURI($"{UsersEndpoint}/{data.Id}"));
             }
         }
 
